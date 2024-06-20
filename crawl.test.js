@@ -27,7 +27,7 @@ test('relative to absolute url', () => {
 `
   const baseURL = 'jesusislord.com'
   const result = ['jesusislord.com/creeds/nicene']
-  expect(getURLsFromHTML(htmlBody, baseURL)).toBe(result)
+  expect(getURLsFromHTML(htmlBody, baseURL)).toStrictEqual(result)
 })
 
 test('multiple anchors', () => {

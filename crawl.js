@@ -10,14 +10,20 @@ function normalizeURL(url) {
 }
 
 function getURLsFromHTML(htmlBody, baseURL) {
+  let finalArray = []
   const objectModel = new JSDOM(htmlBody)
   const anchorArray = objectModel.window.document.querySelectorAll('a')
   anchorArray.forEach(anchor => {
-    console.log(anchor.href)
+    let ref = anchor.href
+    if (!ref.startsWith(baseURL)) {
+      ref = baseURL + ref
+    };
+    finalArray.push(ref)
   })
+  return finalArray
 }
 
-
+/*
 const htmlBody = `
 <html>
     <body>
@@ -27,6 +33,6 @@ const htmlBody = `
 `;
 const baseURL = 'jesusislord.com'
 getURLsFromHTML(htmlBody, baseURL)
-
+*/
 
 export { normalizeURL, getURLsFromHTML };
