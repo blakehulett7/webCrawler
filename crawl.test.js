@@ -13,7 +13,7 @@ test('normalize / only', () => {
   expect(normalizeURL('http://jesusislord.com/path/')).toBe('jesusislord.com/path')
 });
 
-test('normalize neither', () => {
-  expect(normalizeURL('http://jesusislord.com/path')).toBe('jesusislord.com/path')
+test('normalize uppercase', () => {
+  expect(normalizeURL('http://JESUSislord.com/path')).toBe('jesusislord.com/path')
 });
 
