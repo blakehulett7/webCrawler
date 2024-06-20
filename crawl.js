@@ -27,7 +27,9 @@ function getURLsFromHTML(htmlBody, baseURL) {
 const htmlBody = `
 <html>
     <body>
-        <a href="/creeds/nicene">recite the Nicene Creed</a>
+        <a href="jesusislord.com/creeds/nicene">recite the Nicene Creed</a>
+        <a href="jesusislord.com/gospels/luke">The Gospel According to Luke</a>
+        <a href="jesusislord.com/gospels/john">The Gospel According to John</a>
     </body>
 </html>
 `;
