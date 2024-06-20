@@ -1,3 +1,5 @@
+import { JSDOM } from 'jsdom'
+
 function normalizeURL(url) {
   let strippedURL = url
   if (url.endsWith('/')) {
@@ -7,4 +9,6 @@ function normalizeURL(url) {
   return urlObject.hostname + urlObject.pathname
 }
 
-export { normalizeURL };
+function getURLsFromHTML(htmlBody, baseURL) {}
+
+export { normalizeURL, getURLsFromHTML };
