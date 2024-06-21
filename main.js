@@ -1,4 +1,5 @@
 import process from 'node:process'
+import {crawlPage} from './crawl.js'
 
 function main() {
   const input = process.argv
@@ -7,7 +8,9 @@ function main() {
     console.log('Error: Incorrect number of arguments')
     return
   }
-  console.log(`Crawler starting at ${clArgs[0]}...`)
+  const targetSite = clArgs[0]
+  console.log(`Crawler starting at ${targetSite}...`)
+  crawlPage(targetSite)
 }
 
 main()
