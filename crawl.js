@@ -37,7 +37,7 @@ async function crawlPage(currentURL) {
     console.log('Error: Response data is not html text...')
     return
   }
-  const contents = await resp.text
+  const contents = await resp.text()
   console.log(contents)
 }
 
