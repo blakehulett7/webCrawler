@@ -23,18 +23,24 @@ function getURLsFromHTML(htmlBody, baseURL) {
   return finalArray
 }
 
-/*
-const htmlBody = `
-<html>
-    <body>
-        <a href="jesusislord.com/creeds/nicene">recite the Nicene Creed</a>
-        <a href="jesusislord.com/gospels/luke">The Gospel According to Luke</a>
-        <a href="jesusislord.com/gospels/john">The Gospel According to John</a>
-    </body>
-</html>
-`;
-const baseURL = 'jesusislord.com'
-getURLsFromHTML(htmlBody, baseURL)
-*/
+async function crawlPage(currentURL) {
+  const resp = await fetch(currentURL, {
+    method: 'GET',
+    mode: 'cors',
+    })
+  if ((400 <= resp.status) && (resp.status < 500)) {
+    console.log(`Client Error ${resp.status}`)
+    return
+  }
+  const contentType = resp.headers.get('content-type')
+  if (!contentType.includes('text/html')) {
+    console.log('Error: Response data is not html text...')
+    return
+  }
+  const contents = await resp.text
+  console.log(contents)
+}
+
+crawlPage('https://wagslane.dev')
 
 export { normalizeURL, getURLsFromHTML };
