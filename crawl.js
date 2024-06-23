@@ -24,6 +24,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
 }
 
 async function crawlPage(currentURL) {
+  console.log(`Crawling ${currentURL}...`)
   try {
     const resp = await fetch(currentURL, {
       method: 'GET',
@@ -69,7 +70,6 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   for (let link of linkArray) {
     pages = await crawlPageR(baseURL, link, pages)
   }
-  console.log(pages)
   return pages
 }
 
@@ -78,9 +78,12 @@ function printReport(pages) {
   console.log(pages)
 }
 
+function sortReport(pages) {
+  return Object.entries(pages)
+}
+
 
 const pages = await crawlPageR('https://wagslane.dev')
-console.log('Final Result:')
-console.log(pages)
+console.log(sortReport(pages))
 
 export { normalizeURL, getURLsFromHTML, crawlPage };
