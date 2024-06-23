@@ -49,12 +49,20 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   const baseURLObject = new URL(baseURL)
   const currentURLObject = new URL(currentURL)
   if (!(baseURLObject.hostname === currentURLObject.hostname)) {
-    console.log('Different Domain!')
     return pages
   }
+  const normalURL = normalizeURL(currentURL);
+  if (pages[normalURL]) {
+    pages[normalURL]++
+  } else {
+    pages[normalURL] = 1
+  }
+  console.log(pages)
 }
 
-crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene')
+crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene', {
+  'jesusislord.com/creeds/nicene': 1
+})
 
 
 export { normalizeURL, getURLsFromHTML, crawlPage };
