@@ -1,5 +1,5 @@
 import process from 'node:process'
-import {crawlPage} from './crawl.js'
+import {crawlPageR,} from './crawl.js'
 
 function main() {
   const input = process.argv
@@ -10,7 +10,7 @@ function main() {
   }
   const targetSite = clArgs[0]
   console.log(`Crawler starting at ${targetSite}...`)
-  crawlPage(targetSite)
+  crawlPageR(targetSite)
 }
 
 main()

@@ -75,15 +75,25 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
 
 function printReport(pages) {
   console.log('Link Report Starting...')
-  console.log(pages)
+  const sortedPages = sortReport(pages)
+  for (let page in sortedPages) {
+    const count = sortedPages[page]
+    console.log(`Found ${count} internal links to ${page}`)
+  }
 }
 
 function sortReport(pages) {
-  return Object.entries(pages)
+  const array = Object.entries(pages);
+  array.sort(function (a, b) {
+    return b[1] - a[1]
+  })
+  const sortedPages = Object.fromEntries(array)
+  return sortedPages
 }
 
 
 const pages = await crawlPageR('https://wagslane.dev')
 console.log(sortReport(pages))
+printReport(pages)
 
-export { normalizeURL, getURLsFromHTML, crawlPage };
+export { normalizeURL, getURLsFromHTML, crawlPage, crawlPageR };
