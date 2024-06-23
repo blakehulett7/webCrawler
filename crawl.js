@@ -45,4 +45,16 @@ async function crawlPage(currentURL) {
   }
 }
 
+async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
+  const baseURLObject = new URL(baseURL)
+  const currentURLObject = new URL(currentURL)
+  if (!(baseURLObject.hostname === currentURLObject.hostname)) {
+    console.log('Different Domain!')
+    return pages
+  }
+}
+
+crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene')
+
+
 export { normalizeURL, getURLsFromHTML, crawlPage };
