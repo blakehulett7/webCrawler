@@ -15,7 +15,7 @@ function getURLsFromHTML(htmlBody, baseURL) {
   const anchorArray = objectModel.window.document.querySelectorAll('a')
   anchorArray.forEach(anchor => {
     let ref = anchor.href
-    if (!ref.startsWith(baseURL)) {
+    if (ref.startsWith('/')) {
       ref = baseURL + ref
     };
     finalArray.push(ref)
@@ -39,11 +39,19 @@ async function crawlPage(currentURL) {
       return
     }
     const contents = await resp.text()
-    console.log(contents)
+    return contents
   } catch {
     console.log('Unknown Error occurred, get absolutely wrecked!')
   }
 }
+
+async function getLinksFromURL(baseURL, currentURL) {
+  const html = await crawlPage(currentURL);
+  const links = getURLsFromHTML(html, baseURL)
+  console.log(links)
+  return links
+}
+
 
 async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   const baseURLObject = new URL(baseURL)
@@ -60,9 +68,13 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   console.log(pages)
 }
 
-crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene', {
+getLinksFromURL('https://wagslane.dev', 'https://www.wagslane.dev/posts/func-y-json-api/')
+
+
+/*
+`crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene', {
   'jesusislord.com/creeds/nicene': 1
 })
-
+*/
 
 export { normalizeURL, getURLsFromHTML, crawlPage };
