@@ -36,7 +36,7 @@ async function crawlPage(currentURL) {
     const contentType = resp.headers.get('content-type')
     if (!contentType.includes('text/html')) {
       console.log('Error: Response data is not html text...')
-      return
+      return 
     }
     const contents = await resp.text()
     return contents
@@ -53,7 +53,6 @@ async function getLinksFromURL(baseURL, currentURL) {
 
 
 async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
-  console.log(baseURL, currentURL, pages)
   const baseURLObject = new URL(baseURL)
   const currentURLObject = new URL(currentURL)
   if (!(baseURLObject.hostname === currentURLObject.hostname)) {
@@ -68,15 +67,20 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   }
   const linkArray = await getLinksFromURL(baseURL, currentURL)
   for (let link of linkArray) {
-    crawlPageR(baseURL, link, pages)
+    pages = await crawlPageR(baseURL, link, pages)
   }
+  console.log(pages)
   return pages
 }
 
+function printReport(pages) {
+  console.log('Link Report Starting...')
+  console.log(pages)
+}
 
 
-
-console.log(crawlPageR('https://wagslane.dev'))
-
+const pages = await crawlPageR('https://wagslane.dev')
+console.log('Final Result:')
+console.log(pages)
 
 export { normalizeURL, getURLsFromHTML, crawlPage };
