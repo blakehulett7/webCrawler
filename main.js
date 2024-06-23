@@ -1,7 +1,7 @@
 import process from 'node:process'
-import {crawlPageR,} from './crawl.js'
+import {crawlPageR, printReport} from './crawl.js'
 
-function main() {
+async function main() {
   const input = process.argv
   const clArgs = input.slice(2, input.length)
   if (clArgs.length != 1) {
@@ -10,7 +10,8 @@ function main() {
   }
   const targetSite = clArgs[0]
   console.log(`Crawler starting at ${targetSite}...`)
-  crawlPageR(targetSite)
+  const report = await crawlPageR(targetSite)
+  printReport(report)
 }
 
 main()

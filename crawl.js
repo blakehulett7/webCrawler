@@ -92,8 +92,5 @@ function sortReport(pages) {
 }
 
 
-const pages = await crawlPageR('https://wagslane.dev')
-console.log(sortReport(pages))
-printReport(pages)
 
-export { normalizeURL, getURLsFromHTML, crawlPage, crawlPageR };
+export { normalizeURL, getURLsFromHTML, crawlPage, crawlPageR, printReport };
