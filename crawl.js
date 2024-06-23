@@ -47,13 +47,13 @@ async function crawlPage(currentURL) {
 
 async function getLinksFromURL(baseURL, currentURL) {
   const html = await crawlPage(currentURL);
-  const links = getURLsFromHTML(html, baseURL)
-  console.log(links)
+  const links = await getURLsFromHTML(html, baseURL)
   return links
 }
 
 
 async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
+  console.log(baseURL, currentURL, pages)
   const baseURLObject = new URL(baseURL)
   const currentURLObject = new URL(currentURL)
   if (!(baseURLObject.hostname === currentURLObject.hostname)) {
@@ -62,19 +62,21 @@ async function crawlPageR(baseURL, currentURL = baseURL, pages = {}) {
   const normalURL = normalizeURL(currentURL);
   if (pages[normalURL]) {
     pages[normalURL]++
+    return pages
   } else {
     pages[normalURL] = 1
   }
-  console.log(pages)
+  const linkArray = await getLinksFromURL(baseURL, currentURL)
+  for (let link of linkArray) {
+    crawlPageR(baseURL, link, pages)
+  }
+  return pages
 }
 
-getLinksFromURL('https://wagslane.dev', 'https://www.wagslane.dev/posts/func-y-json-api/')
 
 
-/*
-`crawlPageR('https://jesusislord.com', 'https://jesusislord.com/creeds/nicene', {
-  'jesusislord.com/creeds/nicene': 1
-})
-*/
+
+console.log(crawlPageR('https://wagslane.dev'))
+
 
 export { normalizeURL, getURLsFromHTML, crawlPage };
